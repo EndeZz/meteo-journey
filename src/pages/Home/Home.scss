@@ -1,0 +1,46 @@
+@import '../../styles/mixins.scss';
+@import '../../styles/variables.scss';
+
+.home {
+  margin-top: 94px;
+  display: grid;
+
+  &__form {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 562px;
+    margin: 0 auto;
+  }
+
+  &__search {
+    background: $color-grey-100;
+    border: 2px solid $color-grey-200;
+    color: $color-txt;
+
+    &::placeholder {
+      color: $color-grey-300;
+    }
+  }
+
+  &__info {
+    position: relative;
+    width: 562px;
+    margin: 43px auto 0;
+
+    &-arrow {
+      position: absolute;
+      left: 90px;
+      top: -12px;
+
+      width: 38px;
+      height: 32px;
+    }
+
+    &-text {
+      @include font_config(normal, 500, 2.4rem, 2.8rem);
+
+      text-align: center;
+    }
+  }
+}

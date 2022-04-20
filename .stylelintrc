@@ -1,0 +1,46 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-sass-guidelines"
+  ],
+  "rules": {
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "mixin",
+          "extends",
+          "ignores",
+          "function",
+          "include",
+          "return",
+          "if"
+        ]
+      }
+    ],
+    "at-rule-empty-line-before": [
+      "always",
+      {
+        "ignore": [
+          "blockless-after-blockless"
+        ],
+        "except": [
+          "inside-block"
+        ]
+      }
+    ],
+    "declaration-empty-line-before": null,
+    "selector-class-pattern": null,
+    "selector-pseudo-element-colon-notation": null,
+    "max-nesting-depth": 3,
+    "selector-no-qualifying-type": [true, {"ignore": ["attribute", "class"]}],
+    "order/properties-alphabetical-order": null,
+    "scss/dollar-variable-pattern": "^[a-z]",
+    "scss/at-mixin-pattern": "^[a-z]",
+    "scss/selector-no-redundant-nesting-selector": true,
+    "order/order": [
+      "custom-properties",
+      "declarations"
+    ]
+  }
+}

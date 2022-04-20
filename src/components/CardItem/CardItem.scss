@@ -1,0 +1,128 @@
+@import '../../styles/mixins.scss';
+@import '../../styles/variables.scss';
+
+.card-item {
+  display: flex;
+  margin-top: 30px;
+
+  &__title {
+    @include font_config(normal, 500, 4.8rem, 7rem);
+
+    text-align: center;
+    margin-bottom: 20px;
+
+    & span {
+      color: $color-primary;
+    }
+  }
+
+  &__favorite {
+    position: absolute;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    fill: $color-primary;
+
+    &_icon > * {
+      fill: $color-primary;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: $color-grey-100;
+    }
+  }
+
+  &__item {
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    background-color: $color-light;
+    border: 3px solid $color-grey-200;
+    border-radius: 10px;
+
+    width: 253px;
+    min-height: 316px;
+    height: 100%;
+    padding: 28px;
+    text-decoration: none;
+    overflow: hidden;
+
+    &:hover {
+      border: 3px solid $color-primary;
+      box-shadow: 0px 6px 12px $color-grey-200;
+
+      & .card-item__btn_more {
+        opacity: 1;
+        visibility: inherit;
+      }
+    }
+  }
+
+  &__pic {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+
+    &_icon {
+      width: 78px;
+      height: 78px;
+    }
+  }
+
+  &__desc {
+    @include font_config(normal, 400, 1.4rem, 2.2rem);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    height: 100%;
+
+    color: $color-grey-300;
+    text-align: start;
+  }
+
+  &__temp {
+    @include font_config(normal, 400, 8rem, 9.4rem);
+  }
+
+  &__city {
+    @include font_config(normal, 500, 2.4rem, 3rem);
+
+    color: $color-txt;
+  }
+
+  &__meta {
+    margin-top: 15px;
+    display: block;
+
+    & .card-item__date,
+    & .card-item__time {
+      margin: 0;
+    }
+  }
+
+  &__btn_more {
+    @include font_config(normal, 500, 1.8rem, 3rem);
+
+    border-radius: 8px;
+
+    position: absolute;
+    bottom: 5px;
+    right: 8px;
+    opacity: 0;
+    visibility: hidden;
+
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+      color: $color-primary;
+
+      & * {
+        transition: all 0.3s ease;
+        transform: translateX(2px);
+      }
+    }
+  }
+}

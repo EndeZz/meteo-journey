@@ -1,0 +1,141 @@
+@import '../../styles/mixins.scss';
+@import '../../styles/variables.scss';
+
+.city {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 54px;
+  margin-top: 94px;
+
+  &__section {
+    background-color: $color-light;
+    border: 3px solid $color-grey-200;
+    box-shadow: 0 4px 10px $color-grey-100;
+    border-radius: 10px;
+    width: 100%;
+    padding: 40px;
+  }
+  &__sidebar {
+    background-color: $color-light;
+    border: 3px solid $color-grey-200;
+    box-shadow: 0 4px 10px $color-grey-100;
+    border-radius: 10px;
+
+    height: max-content;
+    max-width: 561px;
+    width: 100%;
+    padding: 40px;
+
+    &_wrapper {
+      width: 100%;
+      gap: 10px;
+      flex-direction: column;
+      display: flex;
+    }
+
+    &_item {
+      background-color: $color-light;
+      border: 3px solid $color-grey-200;
+      box-shadow: 0 4px 10px $color-grey-100;
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  &__wrapper {
+    position: relative;
+  }
+
+  &__list {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+  }
+
+  &__back-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: $color-txt;
+    gap: 12px;
+
+    &_caption {
+      @include font_config(normal, 400, 1.6rem, 1.8rem);
+    }
+  }
+
+  &__bookmark {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 28px;
+  }
+
+  &__title {
+    @include font_config(normal, 500, 5.6rem, 6.2rem);
+
+    color: $color-grey-400;
+  }
+
+  &__subtitle {
+    @include font_config(normal, 400, 1.6rem, 1.8rem);
+
+    color: $color-grey-400;
+    margin-top: 16px;
+  }
+
+  &__degree {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+
+    &-text {
+      @include font_config(normal, 600, 12.9755rem, 14.4rem);
+    }
+
+    &-img {
+      position: relative;
+      top: -6px;
+      left: 6px;
+    }
+  }
+
+  &__pressure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 38px;
+
+    &-text {
+      @include font_config(normal, 400, 1.6rem, 1.9rem);
+
+      color: $color-grey-400;
+    }
+  }
+
+  &__time-caption {
+    @include font_config(normal, 400, 1.6rem, 1.8rem);
+
+    margin-top: 32px;
+  }
+}

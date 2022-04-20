@@ -1,0 +1,41 @@
+@import '../../styles/mixins.scss';
+@import '../../styles/variables.scss';
+
+.header {
+  width: 100%;
+  border-bottom: 1px solid $color-primary-fade-50;
+  background-color: $color-light;
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__link {
+    text-decoration: none;
+    outline: none;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  &__title {
+    @include font_config(normal, 500, 3.2rem, 4.7rem);
+
+    font-family: $font-logo;
+
+    color: $color-txt;
+
+    & span {
+      color: $color-primary;
+    }
+  }
+
+  &__btn-group {
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+  }
+}

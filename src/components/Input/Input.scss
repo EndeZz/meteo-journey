@@ -1,0 +1,43 @@
+@import '../../styles/mixins.scss';
+@import '../../styles/variables.scss';
+
+.input {
+  height: 50px;
+  width: 100%;
+  padding: 17px;
+
+  border: 2px solid $color-grey-200;
+  border-radius: 8px;
+  outline: none;
+
+  background-color: inherit;
+  color: $color-grey-300;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+
+  &__checkbox {
+    width: auto;
+    height: auto;
+    align-items: center;
+    margin-right: 10px;
+  }
+
+  &:hover {
+    border: 2px solid $color-grey-300;
+  }
+
+  &:focus {
+    border: 2px solid $color-primary;
+  }
+
+  &::placeholder {
+    color: $color-bg;
+  }
+
+  &::-webkit-search-cancel-button {
+    opacity: 0;
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,30 @@
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local(''),
+    url('../../public/fonts/roboto-v27-latin_cyrillic-regular.woff') format('woff2'),
+    url('../../public/fonts/roboto-v27-latin_cyrillic-regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src:
+    local(''),
+    url('../../public/fonts/roboto-v27-latin_cyrillic-500.woff2') format('woff2'),
+    url('../../public/fonts/roboto-v27-latin_cyrillic-500.woff') format('woff');
+}
+
+/* poppins-500 - latin */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  src:
+    local(''),
+    url('../../public/fonts/poppins-v19-latin-500.woff2') format('woff2'),
+    url('../../public/fonts/poppins-v19-latin-500.woff') format('woff'),
+}

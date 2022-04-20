@@ -1,0 +1,87 @@
+html {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  font-size: 10px;
+  height: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  /* Works on Firefox*/
+  scrollbar-color: $color-primary;
+  scrollbar-width: thin;
+
+  /* Works on Chrome, Edge, and Savari*/
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: $color-grey-200;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-grey-300;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: $color-grey-400;
+    }
+  }
+
+  &::selection {
+    color: #fff;
+    background-color: $color-primary-fade-50;
+  }
+}
+
+body {
+  @include font_config(normal, 400, 1.8rem, 3rem);
+
+  font-family: $font;
+  background-color: $color-bg;
+  color: $color-txt;
+}
+
+ul {
+  list-style: none;
+}
+
+a,
+button,
+input {
+  font-family: inherit;
+  margin: 0;
+  transition: 0.2s;
+}
+// a:focus,
+// button:focus,
+// input:focus {
+//   outline: none;
+//   box-shadow: 0 0 0 0.3rem $color-primary-fade-30;
+// }
+
+.container {
+  margin: 0 auto;
+  max-width: 1180px;
+  width: 100%;
+}
+
+.hidden {
+  position: absolute;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+}
