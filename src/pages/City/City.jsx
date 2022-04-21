@@ -8,10 +8,10 @@ import useToggle from '../../hooks/useToggle';
 import './City.scss';
 
 const City = () => {
+  useTitle(`MeteoJourney: Погода в городе`);
   const [isFavorite, onFavorite] = useToggle(true);
   const navigate = useNavigate();
   const { name } = useParams();
-  useTitle(`MeteoJourney: Погода в городе`);
 
   const goBack = useCallback(
     (e) => {

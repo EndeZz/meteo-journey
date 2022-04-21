@@ -1,5 +1,6 @@
 import './Card.scss';
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CardItem from '../CardItem/CardItem';
 
 const cardData = [

@@ -13,7 +13,7 @@ const CardItem = ({ data }) => {
   const goToPages = useCallback(
     (e) => {
       e.preventDefault();
-      navigate(`/city/` + data.city);
+      navigate(`/city/${data.name}`);
     },
     [navigate]
   );

@@ -1,6 +1,54 @@
+@import '../../styles/mixins.scss';
+@import '../../styles/variables.scss';
+
 .auth {
-  &__wrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 54px;
+  margin-top: 94px;
+
+  &__section {
+    background-color: $color-light;
+    border: 2px solid $color-grey-200;
+    box-shadow: 0 4px 10px $color-grey-100;
+    border-radius: 10px;
+
+    margin: 0 auto;
+    height: max-content;
+    padding: 30px;
+    width: 394px;
+  }
+
+  &__content {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    height: 80%;
+  }
+
+  &__title {
+    @include font_config(normal, 500, 2.4rem, 2.8rem);
+
+    color: $color-txt;
+    margin-bottom: 20px;
+  }
+
+  &__form {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    grid-row-gap: 20px;
+    align-items: flex-start;
+
+    & input {
+      &::placeholder {
+        color: $color-grey-300;
+      }
+    }
   }
 }

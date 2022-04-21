@@ -7,8 +7,6 @@
 
   &__form {
     position: relative;
-    display: flex;
-    justify-content: center;
     width: 562px;
     margin: 0 auto;
   }
@@ -30,7 +28,7 @@
 
     &-arrow {
       position: absolute;
-      left: 90px;
+      left: 36px;
       top: -12px;
 
       width: 38px;
@@ -43,4 +41,57 @@
       text-align: center;
     }
   }
+
+  &__suggestions {
+    &_list {
+      width: inherit;
+      max-height: 180px;
+      position: absolute;
+      overflow: auto;
+      z-index: 1;
+    }
+
+    &_item {
+      color: $color-light;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+
+      background: $color-light;
+
+      border: 2px solid $color-grey-200;
+      border-top: none;
+
+      &:hover {
+        background: $color-grey-100;
+      }
+
+      &:active {
+        background: $color-grey-200;
+      }
+
+      &:last-child {
+        border-radius: 0 0 8px 8px;
+      }
+    }
+
+    &_link {
+      text-decoration: none;
+      width: 100%;
+      color: inherit;
+      display: block;
+      padding: 10px 12px;
+
+      &_current {
+        color: $color-primary;
+      }
+
+      &_remainder {
+        color: $color-grey-300;
+      }
+    }
+  }
 }
+
+
+
