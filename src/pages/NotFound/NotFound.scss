@@ -18,10 +18,12 @@
 
   &__subtitle {
     @include font_config(normal, 500, 2.4rem, 3rem);
+  }
 
-    & a {
-      color: $color-primary;
-      text-decoration: none;
-    }
+  &_back {
+    color: $color-primary;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
   }
 }

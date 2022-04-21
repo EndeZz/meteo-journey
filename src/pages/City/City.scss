@@ -8,42 +8,14 @@
   gap: 54px;
   margin-top: 94px;
 
-  &__section {
-    background-color: $color-light;
-    border: 3px solid $color-grey-200;
-    box-shadow: 0 4px 10px $color-grey-100;
-    border-radius: 10px;
-    width: 100%;
-    padding: 40px;
-  }
+  &__section,
   &__sidebar {
     background-color: $color-light;
     border: 3px solid $color-grey-200;
     box-shadow: 0 4px 10px $color-grey-100;
     border-radius: 10px;
-
-    height: max-content;
-    max-width: 561px;
     width: 100%;
     padding: 40px;
-
-    &_wrapper {
-      width: 100%;
-      gap: 10px;
-      flex-direction: column;
-      display: flex;
-    }
-
-    &_item {
-      background-color: $color-light;
-      border: 3px solid $color-grey-200;
-      box-shadow: 0 4px 10px $color-grey-100;
-      border-radius: 10px;
-      padding: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
   }
 
   &__wrapper {
@@ -61,23 +33,34 @@
   }
 
   &__back-link {
-    position: absolute;
-    top: 0;
-    left: 0;
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: $color-txt;
-    gap: 12px;
+    color: $color-grey-300;
+    gap: 8px;
 
     &_caption {
-      @include font_config(normal, 400, 1.6rem, 1.8rem);
+      @include font_config(normal, 400, 1.8rem, 1.8rem);
+    }
+
+    &:hover {
+      color: $color-primary;
     }
   }
 
-  &__bookmark {
-    &:hover {
-      cursor: pointer;
+  &__favorite {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    fill: $color-primary;
+
+    &_icon > * {
+      fill: $color-primary;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: $color-grey-100;
     }
   }
 
@@ -86,20 +69,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 28px;
+    height: 80%
   }
 
   &__title {
     @include font_config(normal, 500, 5.6rem, 6.2rem);
 
-    color: $color-grey-400;
-  }
-
-  &__subtitle {
-    @include font_config(normal, 400, 1.6rem, 1.8rem);
-
-    color: $color-grey-400;
-    margin-top: 16px;
+    color: $color-txt;
   }
 
   &__degree {
@@ -109,33 +85,73 @@
     margin-top: 16px;
 
     &-text {
-      @include font_config(normal, 600, 12.9755rem, 14.4rem);
-    }
+      @include font_config(normal, 400, 8rem, 4.2rem);
 
-    &-img {
-      position: relative;
-      top: -6px;
-      left: 6px;
+      color: $color-grey-300;
     }
   }
 
-  &__pressure {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 38px;
+  &__pressure-text {
+    @include font_config(normal, 400, 1.6rem, 1.9rem);
 
-    &-text {
-      @include font_config(normal, 400, 1.6rem, 1.9rem);
-
-      color: $color-grey-400;
-    }
+    color: $color-grey-300;
   }
 
-  &__time-caption {
-    @include font_config(normal, 400, 1.6rem, 1.8rem);
+  &__date {
+    margin-top: 16px;
+  }
 
-    margin-top: 32px;
+  &__time,
+  &__date,
+  &__pressure,
+  &__subtitle {
+    @include font_config(normal, 400, 1.6rem, 2.5rem);
+
+    color: $color-grey-300;
+  }
+
+  &__sidebar {
+    height: max-content;
+    max-width: 561px;
+    width: 100%;
+    padding: 40px;
+
+    &_wrapper {
+      width: 100%;
+      gap: 8px;
+      flex-direction: column;
+      display: flex;
+    }
+
+    &_item {
+      background-color: $color-light;
+      border: 3px solid $color-grey-200;
+      box-shadow: 0 4px 10px $color-grey-100;
+      border-radius: 10px;
+      padding: 10px 19px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &_weekday {
+      @include font_config(normal, 500, 2.4rem, 2.8rem);
+
+      color: $color-txt;
+    }
+
+    &_date {
+      @include font_config(normal, 400, 1.8rem, 2.1rem);
+
+      color: $color-grey-300;
+    }
+
+    &_degree {
+      @include font_config(normal, 400, 2.4rem, 2.4rem);
+
+      color: $color-grey-300;
+      display: flex;
+      align-items: center;
+    }
   }
 }
