@@ -3,27 +3,31 @@ import { Link, useNavigate } from 'react-router-dom';
 import Icon from '../Icon';
 import Button from '../Button';
 import './CardItem.scss';
-import useToggle from '../../hooks/useToggle';
+import { useDispatch } from 'react-redux';
+import { removeFromFavorites } from '../../redux/favorite/actions';
 
-const CardItem = ({ data }) => {
-  const [isFavorite, onFavorite] = useToggle(true);
-
+const CardItem = ({ item }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const goToPages = useCallback(
     (e) => {
       e.preventDefault();
-      navigate(`/city/${data.name}`);
+      navigate(`/city/${item.name}`);
     },
     [navigate]
   );
 
+  const handleFavorite = useCallback(() => {
+    dispatch(removeFromFavorites(item));
+  }, [dispatch]);
+
   return (
     <article className="card-item__item">
-      <Button className="btn card-item__favorite" onClick={onFavorite}>
+      <Button className="btn card-item__favorite" onClick={handleFavorite}>
         <Icon
           className="icon card-item__favorite_icon"
-          name={isFavorite ? 'favorite' : 'unfavorite'}
+          name={!!item.name ? 'favorite' : 'unfavorite'}
           width={24}
           height={24}
         />
@@ -34,11 +38,11 @@ const CardItem = ({ data }) => {
       </span>
 
       <div className="card-item__desc">
-        <span className="card-item__temp">{data.temp}</span>
-        <h3 className="card-item__city">{data.name}</h3>
+        <span className="card-item__temp">{item.temp}</span>
+        <h3 className="card-item__city">{item.name}</h3>
         <div className="card-item__meta">
-          <p className="card-item__date">{data.date}</p>
-          <p className="card-item__time">Сейчас {data.time}</p>
+          <p className="card-item__date">{item.date}</p>
+          <p className="card-item__time">Сейчас {item.time}</p>
         </div>
       </div>
 

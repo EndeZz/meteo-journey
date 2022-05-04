@@ -1,58 +1,12 @@
 import './Card.scss';
-import React, { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import CardItem from '../CardItem/CardItem';
 
-const cardData = [
-  {
-    name: 'Москва',
-    date: '20.04.2022',
-    time: '18:30',
-    temp: '-13',
-    desc: 'Облачно с прояснениями',
-  },
-  {
-    name: 'Ижевск',
-    date: '20.04.2022',
-    time: '18:30',
-    temp: '-13',
-    desc: 'Облачно с прояснениями',
-  },
-  {
-    name: 'Саратов',
-    date: '20.04.2022',
-    time: '18:30',
-    temp: '-13',
-    desc: 'Облачно с прояснениями',
-  },
-  {
-    name: 'Питер',
-    date: '20.04.2022',
-    time: '18:30',
-    temp: '-13',
-    desc: 'Облачно с прояснениями',
-  },
-  {
-    name: 'Лондон',
-    date: '20.04.2022',
-    time: '18:30',
-    temp: '-13',
-    desc: 'Облачно с прояснениями',
-  },
-  {
-    name: 'Киев',
-    date: '20.04.2022',
-    time: '18:30',
-    temp: '-13',
-    desc: 'Облачно с прояснениями',
-  },
-];
-
-const Card = () => {
+const Card = ({ favorites }) => {
   return (
     <div className="cards">
-      {cardData.map((data, i) => (
-        <CardItem data={data} key={i} />
+      {favorites.map((item) => (
+        <CardItem item={item} key={item.name} />
       ))}
     </div>
   );

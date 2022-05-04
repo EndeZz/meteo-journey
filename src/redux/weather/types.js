@@ -1,0 +1,2 @@
+export const FETCH_WEATHER = 'FETCH_WEATHER';
+export const FETCH_WEATHER_MORE = 'FETCH_WEATHER_MORE';

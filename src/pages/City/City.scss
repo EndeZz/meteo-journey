@@ -69,13 +69,20 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 80%
+    height: 80%;
   }
 
   &__title {
     @include font_config(normal, 500, 5.6rem, 6.2rem);
 
     color: $color-txt;
+  }
+
+  &_day {
+    &-icon {
+      width: 120px;
+      height: 120px;
+    }
   }
 
   &__degree {
@@ -132,6 +139,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+
+    &_day {
+      &-icon {
+        width: 32px;
+        height: 32px;
+      }
     }
 
     &_weekday {

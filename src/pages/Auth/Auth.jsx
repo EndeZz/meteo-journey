@@ -13,8 +13,6 @@ function Auth() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setEmail(email);
-    setPassword(password);
   };
 
   return (
