@@ -24,7 +24,7 @@ module.exports = (env, options) => {
     entry: path.join(__dirname, './src', 'index.jsx'),
     output: {
       path: path.resolve(__dirname, 'dist'),
-      publicPath: '/',
+      publicPath: '/',   // Раскомментить при запуске проекта в режиме разработки
       filename: '[name].[contenthash].js',
     },
     plugins: [

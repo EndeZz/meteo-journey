@@ -6,16 +6,24 @@
   display: flex;
   justify-content: space-between;
   gap: 54px;
-  margin-top: 94px;
+  margin-top: 54px;
 
   &__section,
   &__sidebar {
     background-color: $color-light;
-    border: 3px solid $color-grey-200;
-    box-shadow: 0 4px 10px $color-grey-100;
-    border-radius: 10px;
+    box-shadow: 0 3px 10px $color-grey-200;
+    border-radius: 15px;
     width: 100%;
-    padding: 40px;
+    padding: 24px 34px;
+  }
+
+  &__section {
+    width: 561px;
+  }
+
+  &__container {
+    display: grid;
+    gap: 54px;
   }
 
   &__wrapper {
@@ -32,12 +40,31 @@
     align-items: center;
   }
 
+  &__group-down {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+    text-align: center;
+  }
+
+  &__caption {
+    @include font_config(normal, 500, 2.1rem, 2.3rem);
+
+    margin-bottom: 5px;
+  }
+
+  &__link {
+    @include font_config(normal, 400, 1.6rem, 1.6rem);
+
+    color: $color-grey-300;
+    text-decoration: none;
+  }
+
   &__back-link {
     display: flex;
     align-items: center;
     text-decoration: none;
     color: $color-grey-300;
-    gap: 8px;
 
     &_caption {
       @include font_config(normal, 400, 1.8rem, 1.8rem);
@@ -52,11 +79,7 @@
     cursor: pointer;
     padding: 10px;
     border-radius: 50%;
-    fill: $color-primary;
-
-    &_icon > * {
-      fill: $color-primary;
-    }
+    color: $color-grey-300;
 
     &:hover,
     &:focus {
@@ -69,7 +92,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 80%;
+    text-align: center;
+    gap: 5px;
   }
 
   &__title {
@@ -89,7 +113,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 16px;
 
     &-text {
       @include font_config(normal, 400, 8rem, 4.2rem);
@@ -98,47 +121,89 @@
     }
   }
 
-  &__pressure-text {
-    @include font_config(normal, 400, 1.6rem, 1.9rem);
-
-    color: $color-grey-300;
-  }
-
   &__date {
-    margin-top: 16px;
+    text-align: center;
   }
 
-  &__time,
   &__date,
-  &__pressure,
-  &__subtitle {
-    @include font_config(normal, 400, 1.6rem, 2.5rem);
+  &__desc,
+  &__annotation {
+    @include font_config(normal, 500, 1.6rem, 2.5rem);
 
     color: $color-grey-300;
+  }
+
+  &__annotation {
+    display: flex;
+    gap: 20px;
+    text-align: center;
+    box-shadow: 0 3px 10px $color-grey-200;
+    border-radius: 15px;
+
+    &-item {
+      padding: 12px;
+    }
   }
 
   &__sidebar {
-    height: max-content;
+    height: 720px;
     max-width: 561px;
     width: 100%;
-    padding: 40px;
+    overflow: hidden;
+
+    &_caption {
+      @include font_config(normal, 500, 1.8rem, 2.1rem);
+
+      color: $color-grey-300;
+      margin-bottom: 10px;
+    }
 
     &_wrapper {
+      height: 90%;
+      overflow-y: auto;
+    }
+
+    &_list {
       width: 100%;
-      gap: 8px;
+      gap: 6px;
       flex-direction: column;
       display: flex;
+      overflow: hidden;
     }
 
     &_item {
       background-color: $color-light;
-      border: 3px solid $color-grey-200;
-      box-shadow: 0 4px 10px $color-grey-100;
-      border-radius: 10px;
+      border-radius: 15px;
       padding: 10px 19px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      cursor: pointer;
+
+      &_active {
+        box-shadow: 0 3px 10px $color-grey-200;
+        transform: scale(1.02);
+        color: $color-primary;
+      }
+
+      &_today {
+        background-color: $color-light;
+        border-radius: 15px;
+        padding: 10px 19px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    &_meta {
+      display: block;
+
+      &_flex {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
     }
 
     &_day {
@@ -148,10 +213,11 @@
       }
     }
 
-    &_weekday {
+    &_weekday,
+    &_time {
       @include font_config(normal, 500, 2.4rem, 2.8rem);
 
-      color: $color-txt;
+      color: inherit;
     }
 
     &_date {
@@ -160,12 +226,26 @@
       color: $color-grey-300;
     }
 
-    &_degree {
-      @include font_config(normal, 400, 2.4rem, 2.4rem);
-
-      color: $color-grey-300;
+    &_temp {
       display: flex;
       align-items: center;
+      gap: 5px;
+
+      &_max {
+        @include font_config(normal, 500, 2.4rem, 2.4rem);
+        color: $color-txt;
+      }
+
+      &_current {
+        @include font_config(normal, 500, 2.4rem, 2.4rem);
+        color: $color-grey-300;
+      }
+
+      &_min {
+        @include font_config(normal, 400, 2.4rem, 2.4rem);
+
+        color: $color-grey-300;
+      }
     }
   }
 }

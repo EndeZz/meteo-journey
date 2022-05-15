@@ -3,10 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import Icon from '../Icon';
 import Button from '../Button';
 import './CardItem.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeFromFavorites } from '../../redux/favorite/actions';
+import { getWeatherIcon } from '../../utils/getWeatherIcon';
+import { favoriteSelectors } from '../../redux/favorite/favoriteSelectors';
 
 const CardItem = ({ item }) => {
+  const currentFavoriteValues = useSelector((state) => favoriteSelectors(state, item.name));
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -15,30 +18,38 @@ const CardItem = ({ item }) => {
       e.preventDefault();
       navigate(`/city/${item.name}`);
     },
-    [navigate]
+    [navigate, item.name]
   );
 
   const handleFavorite = useCallback(() => {
-    dispatch(removeFromFavorites(item));
-  }, [dispatch]);
+    if (currentFavoriteValues) {
+      dispatch(removeFromFavorites(currentFavoriteValues));
+    }
+  }, [dispatch, currentFavoriteValues]);
 
   return (
     <article className="card-item__item">
       <Button className="btn card-item__favorite" onClick={handleFavorite}>
         <Icon
-          className="icon card-item__favorite_icon"
           name={!!item.name ? 'favorite' : 'unfavorite'}
           width={24}
           height={24}
+          aria-hidden={true}
         />
       </Button>
 
       <span className="card-item__pic">
-        <Icon name="cloud" width={78} height={78} />
+        <img
+          src={getWeatherIcon(item.weather[0].main)}
+          alt="Weather icon"
+          className="card-item__pic_icon"
+        />
       </span>
 
       <div className="card-item__desc">
-        <span className="card-item__temp">{item.temp}</span>
+        <span className="card-item__temp">
+          {item.temp} {Math.round(item.main.temp)}&#176;
+        </span>
         <h3 className="card-item__city">{item.name}</h3>
         <div className="card-item__meta">
           <p className="card-item__date">{item.date}</p>
@@ -47,7 +58,7 @@ const CardItem = ({ item }) => {
       </div>
 
       <Link to="city" className="btn card-item__btn_more" onClick={goToPages}>
-        Подробнее <Icon className="icon" name="right_arrow" width={24} height={24} />
+        Подробнее <Icon name="arrow-right" width={24} height={24} aria-hidden={true} />
       </Link>
     </article>
   );

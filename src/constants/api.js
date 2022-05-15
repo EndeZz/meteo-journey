@@ -1,5 +1,5 @@
 export const WEATHER_API = {
-  KEY: '3f3c14ff189066c2c8db071a5614f9e2',
+  KEY: '4ff77e3fe342f03d8b1fd20e26d5a71b',
   URL: 'https://api.openweathermap.org/data/2.5',
   ICON: 'https://openweathermap.org/img/w',
 };

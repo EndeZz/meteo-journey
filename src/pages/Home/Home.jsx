@@ -2,52 +2,59 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Card from '../../components/Card';
 import Input from '../../components/Input';
 import Icon from '../../components/Icon';
-import './Home.scss';
+import Loader from '../../components/Loader';
+import Button from '../../components/Button';
+import Suggestions from '../../components/Suggestions';
 import { useTitle } from '../../hooks/useTitle';
-import { CITY_API, WEATHER_API } from '../../constants/api';
-import { fetchApi } from '../../utils/fetchApi';
-import { useSelector } from 'react-redux';
-import Suggestion from '../../components/Suggestions';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCity } from '../../redux/city/actions';
+import { useFirestoreConnect } from 'react-redux-firebase';
+import { fetchWeather } from '../../redux/weather/actions';
+import { authUidSelector } from '../../redux/auth/authSelectors';
+import {
+  weatherCitiesSelector,
+  weatherLoadingSelector,
+} from '../../redux/weather/weatherSelectors';
+import { favoriteValuesSelector } from '../../redux/favorite/favoriteSelectors';
+import { citySuggestionsSelector } from '../../redux/city/citySelectors';
+import { useInterval } from '../../hooks/useInterval';
+import './Home.scss';
 
 const Home = () => {
-  useTitle(`MeteoJourney: Прогноз погоды`);
   const [searchValue, setSearchValue] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
-  const favorites = useSelector((state) => state.favorites);
+  const [filter, setFilter] = useState(null);
+  const weatherCities = useSelector(weatherCitiesSelector);
+  const loading = useSelector(weatherLoadingSelector);
+  const cities = useSelector(citySuggestionsSelector);
+  const favoriteValues = useSelector(favoriteValuesSelector);
+  const authUid = useSelector(authUidSelector);
+  const dispatch = useDispatch();
 
-  const fetchCities = useCallback(async () => {
-    const options = {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: 'Token ' + CITY_API.KEY,
-      },
-      body: JSON.stringify({
-        query: searchValue,
-        from_bound: { value: 'city' },
-        to_bound: { value: 'city' },
-        locations: [
-          {
-            city_type_full: 'город',
-          },
-          // {
-          //   country: '*',
-          // },
-        ],
-        restrict_value: true,
-      }),
-    };
-    const cityData = await fetchApi(CITY_API.URL, options);
-    console.log(cityData.suggestions);
-    setSuggestions(cityData.suggestions);
-  }, [searchValue]);
+  useTitle(`MeteoJourney: Прогноз погоды`);
+  useFirestoreConnect(() => [
+    {
+      collection: 'favorites',
+      where: ['authorId', '==', authUid ?? ''],
+      orderBy: ['date', 'asc'],
+    },
+  ]);
+
+  // Через каждый промежуток времени обновлять данные о погоде
+  useInterval(() => {
+    dispatch(fetchWeather(favoriteValues));
+  }, 1000 * 10);
+
+  // Получение "избранных" городов из firebase
+  useEffect(() => {
+    if (!favoriteValues || favoriteValues.length === 0) return <Loader />;
+
+    dispatch(fetchWeather(favoriteValues));
+  }, [dispatch, favoriteValues]);
 
   const handleChange = useCallback(
     (e) => {
-      if (e.target.value.length > 2) {
-        fetchCities();
+      if (e.target.value.length > 3) {
+        dispatch(fetchCity(searchValue));
       }
       setSearchValue(e.target.value);
     },
@@ -68,18 +75,22 @@ const Home = () => {
             onChange={handleChange}
           />
 
-          {searchValue.length > 0 && (
-            <Suggestion searchValue={searchValue} suggestions={suggestions} />
-          )}
+          {searchValue.length > 0 && <Suggestions searchValue={searchValue} suggestions={cities} />}
         </div>
 
-        {favorites.length <= 0 ? (
+        {favoriteValues && favoriteValues.length > 0 ? (
+          <Card favorites={filter || weatherCities} />
+        ) : (
           <div className="home__info">
-            <Icon name="arrow" className="icon home__info-arrow" width={24} height={24} />
+            <Icon
+              name="arrow"
+              className="home__info-arrow"
+              width={24}
+              height={24}
+              aria-hidden={true}
+            />
             <p className="home__info-text">Начните вводить город или место</p>
           </div>
-        ) : (
-          <Card favorites={favorites} />
         )}
       </section>
     </main>

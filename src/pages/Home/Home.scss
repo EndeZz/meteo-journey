@@ -2,7 +2,7 @@
 @import '../../styles/variables.scss';
 
 .home {
-  margin-top: 94px;
+  margin-top: 54px;
   display: grid;
 
   &__wrapper {
@@ -12,8 +12,8 @@
   }
 
   &__search {
-    background: $color-grey-100;
-    border: 2px solid $color-grey-200;
+    background: $color-light;
+    box-shadow: 0 3px 10px $color-grey-100;
     color: $color-txt;
 
     &::placeholder {
@@ -49,6 +49,8 @@
       position: absolute;
       overflow: auto;
       z-index: 1;
+      border-radius: 25px;
+      box-shadow: 0 3px 10px $color-grey-200;
     }
 
     &_item {
@@ -59,9 +61,6 @@
 
       background: $color-light;
 
-      border: 2px solid $color-grey-200;
-      border-top: none;
-
       &:hover {
         background: $color-grey-100;
       }
@@ -69,30 +68,27 @@
       &:active {
         background: $color-grey-200;
       }
-
-      &:last-child {
-        border-radius: 0 0 8px 8px;
-      }
     }
 
     &_link {
       text-decoration: none;
-    }
-
-    &_notice,
-    &_current {
-      width: 100%;
-      color: inherit;
-      display: block;
       padding: 10px 12px;
+      display: inline-block;
+      width: 100%;
     }
 
     &_notice {
+      padding: 10px 12px;
+      display: inline-block;
       color: $color-grey-300;
     }
 
     &_current {
       color: $color-primary;
+    }
+
+    &_remainder {
+      color: $color-grey-300;
     }
   }
 }

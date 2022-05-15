@@ -17,7 +17,7 @@ function NotFound() {
         <p className="not-found__subtitle">
           Вернуться на&nbsp;
           <Link to="/" className="not-found_back">
-            главную страницу <Icon className="icon" name="right_arrow" width={24} height={24} />
+            главную страницу <Icon className="icon" name="arrow-right" width={24} height={24} />
           </Link>
         </p>
       </div>

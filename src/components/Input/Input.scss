@@ -5,13 +5,12 @@
   height: 50px;
   width: 100%;
   padding: 17px;
-
-  border: 2px solid $color-grey-200;
-  border-radius: 8px;
+  border: 1px solid $color-grey-200;
+  border-radius: 25px;
   outline: none;
 
   background-color: inherit;
-  color: $color-grey-300;
+  color: $color-txt;
 
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -24,12 +23,15 @@
     margin-right: 10px;
   }
 
-  &:hover {
-    border: 2px solid $color-grey-300;
-  }
+  &_error {
+    border: 2px solid $color-error;
+    &:hover {
+      border: 2px solid $color-error;
+    }
 
-  &:focus {
-    border: 2px solid $color-primary;
+    &:focus {
+      border: 2px solid $color-error;
+    }
   }
 
   &::placeholder {

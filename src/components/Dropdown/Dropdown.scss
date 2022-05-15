@@ -1,0 +1,50 @@
+@import '../../styles/mixins.scss';
+@import '../../styles/variables.scss';
+
+.dropdown {
+  position: relative;
+  outline: none;
+
+  &__list {
+    position: absolute;
+    z-index: $z-tooltip;
+    right: 10px;
+    text-align: left;
+    margin-top: 8px;
+    box-shadow: 0 3px 10px $color-grey-200;
+    border-radius: 15px;
+    background-color: $color-light;
+    width: max-content;
+    height: max-content;
+    overflow: hidden;
+  }
+
+  &__username {
+    @include font_config(normal, 500, 1.6rem, 2.2rem);
+
+    color: $color-grey-300;
+  }
+
+  &__item {
+    color: inherit;
+    display: grid;
+
+    & > * {
+      padding: 12px 19px;
+    }
+
+    &:hover {
+      background: $color-grey-100;
+    }
+  }
+
+  &__btn {
+    width: 100%;
+    &:hover {
+      & svg {
+        transition: all 0.2s ease;
+        transform: translateX(-2px);
+      }
+    }
+  }
+}

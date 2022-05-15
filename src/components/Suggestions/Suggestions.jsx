@@ -6,11 +6,11 @@ import { Link } from 'react-router-dom';
 const Suggestions = ({ suggestions, searchValue }) => {
   return (
     <ul className="home__suggestions_list">
-      {suggestions && searchValue.length > 2 ? (
+      {suggestions && searchValue.length > 3 ? (
         suggestions.map((item) => (
           <li className="home__suggestions_item" key={createId()}>
             <Link to={`/city/${item.data.city}`} className="home__suggestions_link">
-              <span className="home__suggestions_current">{item.value}</span>
+              <span className="home__suggestions_current">{item.data.city}</span>
             </Link>
           </li>
         ))

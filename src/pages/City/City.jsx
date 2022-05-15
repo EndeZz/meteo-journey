@@ -1,28 +1,71 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
 import { useTitle } from '../../hooks/useTitle';
-import useToggle from '../../hooks/useToggle';
 import { getWeatherIcon } from '../../utils/getWeatherIcon';
 import { v4 as createId } from 'uuid';
-import './City.scss';
-import { fetchWeatherMore } from '../../redux/weather/actions.js';
+import { changeDay, fetchWeatherMore } from '../../redux/weather/actions.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToFavorites, removeFromFavorites } from '../../redux/favorite/actions';
 import Loader from '../../components/Loader';
-import { getCityTime, getFullDate, getWeekDay } from '../../utils/helpers';
+import { getFullDate, getFullTime, getRandomCityElements, getWeekDay } from '../../utils/helpers';
+import { useFirestoreConnect } from 'react-redux-firebase';
+import { favoriteSelectors, favoriteValuesSelector } from '../../redux/favorite/favoriteSelectors';
+import {
+  weatherCurrentDaySelector,
+  weatherDataSelector,
+  weatherDaysSelector,
+  weatherLoadingSelector,
+} from '../../redux/weather/weatherSelectors';
+import { useCityNameParam } from '../../hooks/useCityNameParam';
+import './City.scss';
+import { authUidSelector } from '../../redux/auth/authSelectors';
+import { addToCities } from '../../redux/city/actions';
+import { citiesValuesSelectors, cityAlreadyExistsSelectors } from '../../redux/city/citySelectors';
+import { Link } from 'react-router-dom';
 
 const City = () => {
-  useTitle(`MeteoJourney: Погода в городе`);
-  const { name } = useParams();
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isToday, setIsToday] = useState(false);
+  const [selected, setSelected] = useState(0);
+  const name = useCityNameParam();
+  const weatherData = useSelector(weatherDataSelector);
+  const weatherDays = useSelector(weatherDaysSelector);
+  const currentDay = useSelector(weatherCurrentDaySelector);
+  const loading = useSelector(weatherLoadingSelector);
+  const favoriteValues = useSelector(favoriteValuesSelector);
+  const citiesValues = useSelector((state) => citiesValuesSelectors(state, name));
+  const cityAlreadyExists = useSelector((state) => cityAlreadyExistsSelectors(state, name));
+  const currentFavoriteValues = useSelector((state) => favoriteSelectors(state, name));
+  const authUid = useSelector(authUidSelector);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const randomCity = citiesValues && getRandomCityElements(citiesValues);
 
-  const { weatherData } = useSelector((state) => state.weatherInfo);
-  const favorites = useSelector((state) => state.favorites);
+  useTitle(`MeteoJourney: Погода в городе`);
+  useFirestoreConnect(() => [
+    {
+      collection: 'favorites',
+      where: ['authorId', '==', authUid ?? ''],
+    },
+  ]);
+  useFirestoreConnect(() => [{ collection: 'cities' }]);
+
+  // получение информации о погоде в выбранном городе
+  useEffect(() => {
+    dispatch(fetchWeatherMore(name));
+    setSelected(0);
+  }, [name]);
+
+  // Обновление иконки "избранного"
+  useEffect(() => {
+    if (currentFavoriteValues) {
+      setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
+    }
+  }, [favoriteValues]);
 
   const goBack = useCallback(
     (e) => {
@@ -32,110 +75,182 @@ const City = () => {
     [navigate]
   );
 
-  const getFetchForecast = useCallback(() => dispatch(fetchWeatherMore(name)), [dispatch]);
-
   // Добавить город в избранное или удалить его, если данный город уже есть в избранном
-  const handleFavorites = () => {
-    const currentCityName = favorites.find((city) => city.name === name);
-    if (currentCityName) {
-      dispatch(removeFromFavorites(currentCityName));
+  const handleFavorite = useCallback(() => {
+    if (currentFavoriteValues) {
+      dispatch(removeFromFavorites(currentFavoriteValues));
     } else {
-      dispatch(
-        addToFavorites({
-          name: name,
-          temp: Math.round(weatherData.current.temp - 273.15),
-          date: getFullDate(weatherData.current),
-          time: getCityTime(),
-        })
-      );
+      if (!cityAlreadyExists) {
+        dispatch(addToCities({ name }));
+      }
+      dispatch(addToFavorites({ name }));
     }
     setIsFavorite((prev) => !prev);
-  };
+  }, [dispatch, currentFavoriteValues]);
 
-  // получение информации о погоде в выбранном городе
-  useEffect(() => {
-    getFetchForecast();
-    favorites.find((city) => city.name === name) ? setIsFavorite(true) : setIsFavorite(false);
-  }, [name]);
+  // Отобразить конкретный день
+  const handleChangeDays = useCallback(
+    (day) => {
+      setSelected(day);
+      dispatch(changeDay(day));
+    },
+    [dispatch]
+  );
+
+  if (loading) return <Loader />;
 
   return (
     <main className="city container">
-      {JSON.stringify(weatherData) !== '{}' ? (
+      {JSON.stringify(weatherData) !== '{}' && JSON.stringify(currentDay) !== '{}' && (
         <>
-          <section className="city__section">
-            <ul className="city__list">
-              <li className="city__item">
-                <Button className="btn city__back-link" onClick={goBack}>
-                  <Icon
-                    name="left_arrow_circle"
-                    className="icon"
-                    width={24}
-                    height={24}
-                    aria-hidden={true}
-                  />
+          <div className="city__container">
+            <section className="city__section">
+              <ul className="city__list">
+                <li className="city__item">
+                  <Button className="btn city__back-link" onClick={goBack}>
+                    <Icon name="arrow-left-circle" width={24} height={24} aria-hidden={true} />
 
-                  <p className="city__back-link_caption">Назад</p>
-                </Button>
-              </li>
-              <li className="city__item city__favorite">
-                <Button className="btn" onClick={handleFavorites}>
-                  <Icon
-                    name={isFavorite ? `favorite` : `unfavorite`}
-                    className="icon"
-                    width={24}
-                    height={24}
-                  />
-                </Button>
-              </li>
-            </ul>
+                    <p className="city__back-link_caption">Назад</p>
+                  </Button>
+                </li>
+                <li className="city__item">
+                  <Button
+                    className="btn city__favorite"
+                    onClick={handleFavorite}
+                    disabled={!authUid}
+                    title={isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'}>
+                    <Icon
+                      name={isFavorite ? 'favorite' : 'unfavorite'}
+                      width={24}
+                      height={24}
+                      aria-hidden={true}
+                    />
+                  </Button>
+                </li>
+              </ul>
 
-            <div className="city__content">
-              <h2 className="city__title">{name}</h2>
-              <span>Погода: Сейчас</span>
-              <p className="city__date">{`${getWeekDay(weatherData.current)} ${getFullDate(
-                weatherData.current
-              )}`}</p>
-              <p className="city__time">Время: </p>
-              <div className="city__degree">
-                <img
-                  src={getWeatherIcon(weatherData.current.weather[0].main)}
-                  alt="Weather icon"
-                  className="city_day-icon"
-                />
-                <p className="city__degree-text">
-                  {Math.round(weatherData.current.temp - 273)}&#176;
-                </p>
+              <div className="city__content">
+                <h2 className="city__title">{name}</h2>
+                <div className="city__date">
+                  <p>
+                    {getFullDate(currentDay.dt)}, {getWeekDay(currentDay.dt)}
+                  </p>
+                  <p>{currentDay.temp.day ? 'Погода днем' : 'Сейчас'}</p>
+                </div>
+
+                <div className="city__degree">
+                  <img
+                    src={getWeatherIcon(currentDay.weather[0].main)}
+                    alt="Weather icon"
+                    className="city_day-icon"
+                  />
+                  <p className="city__degree-text">
+                    {Math.round(currentDay.temp.day ?? currentDay.temp)}&#176;C
+                  </p>
+                </div>
+                <p className="city__desc">{currentDay.weather[0].description}</p>
+                <ul className="city__annotation">
+                  <li className="city__annotation-item">
+                    <Icon name="pressure" width={24} height={24} aria-hidden={true} />
+                    <p className="city__caption">Давление</p>
+                    <p className="city__caption_value">
+                      {Math.round(currentDay.pressure / 1.33322)} мм рт. ст.
+                    </p>
+                  </li>
+                  <li className="city__annotation-item">
+                    <Icon name="rainy" width={24} height={24} aria-hidden={true} />
+                    <p className="city__caption">Влажность</p>
+                    <p className="city__caption_value">{currentDay.humidity}%</p>
+                  </li>
+                  <li className="city__annotation-item">
+                    <Icon name="wind" width={24} height={24} aria-hidden={true} />
+                    <p className="city__caption">Ветер</p>
+                    <p className="city__caption_value">{currentDay.wind_speed} мм/с</p>
+                  </li>
+                </ul>
               </div>
-              <p className="city__pressure">
-                {Math.round(weatherData.current.pressure / 1.333)} мм рт. ст.
-              </p>
-              <p className="city__subtitle">{weatherData.current.weather[0].description}</p>
-            </div>
-          </section>
+            </section>
+            {citiesValues && citiesValues.length > 0 && (
+              <section className="city__section">
+                <p className="city__caption">Рекомендации</p>
+                <div className="city__group-down">
+                  {randomCity.map((item) => (
+                    <Link
+                      to={`/city/${item.name}`}
+                      className="btn btn_outline city__link"
+                      key={createId()}>
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
+          </div>
 
           <aside className="city__sidebar">
-            <ul className="city__sidebar_wrapper">
-              {weatherData.daily.map((item) => (
-                <li className="city__sidebar_item" key={createId()}>
-                  <div className="city__sidebar_meta">
-                    <h3 className="city__sidebar_weekday">{getWeekDay(item)}</h3>
-                    <p className="city__sidebar_date">{getFullDate(item)}</p>
-                  </div>
-                  <div className="city__sidebar_degree">
-                    <span>{Math.round(item.temp.day - 273.15)}&#176;</span>
-                    <img
-                      src={getWeatherIcon(item.weather[0].main)}
-                      alt="Weather icon"
-                      className="city__sidebar_day-icon"
-                    />
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <div className="city__sidebar_caption">
+              <Button
+                className={`btn${isToday ? ' btn_secondary' : ' btn_outline'}`}
+                onClick={() => setIsToday(true)}>
+                3 дня
+              </Button>
+              <Button
+                className={`btn${isToday ? ' btn_outline' : ' btn_secondary'}`}
+                onClick={() => setIsToday(false)}>
+                Неделя
+              </Button>
+            </div>
+            <div className="city__sidebar_wrapper">
+              <ul className="city__sidebar_list">
+                {!isToday
+                  ? weatherDays.map((item, index) => (
+                      <li
+                        className={`city__sidebar_item ${
+                          selected === index ? 'city__sidebar_item_active' : ''
+                        }`}
+                        key={createId()}
+                        onClick={() => handleChangeDays(index)}>
+                        <div className="city__sidebar_meta">
+                          <h3 className="city__sidebar_weekday">{getWeekDay(item.dt)}</h3>
+                          <p className="city__sidebar_date">{getFullDate(item.dt)}</p>
+                        </div>
+                        <div className="city__sidebar_temp">
+                          <span className="city__sidebar_temp_max">
+                            {Math.round(item.temp.max)}&#176;
+                          </span>
+                          <span className="city__sidebar_temp_min">
+                            {Math.round(item.temp.min)}&#176;
+                          </span>
+                          <img
+                            src={getWeatherIcon(item.weather[0].main)}
+                            alt="Weather icon"
+                            className="city__sidebar_day-icon"
+                          />
+                        </div>
+                      </li>
+                    ))
+                  : weatherData.hourly.map((item, index) => (
+                      <li className="city__sidebar_item_today" key={createId()}>
+                        <div className="city__sidebar_meta_flex">
+                          <p className="city__sidebar_date">{getFullDate(item.dt)} -</p>
+                          <p className="city__sidebar_time">{getFullTime(item.dt)}</p>
+                        </div>
+                        <div className="city__sidebar_temp">
+                          <span className="city__sidebar_temp_current">
+                            {Math.round(item.temp)}&#176;
+                          </span>
+                          <img
+                            src={getWeatherIcon(item.weather[0].main)}
+                            alt="Weather icon"
+                            className="city__sidebar_day-icon"
+                          />
+                        </div>
+                      </li>
+                    ))}
+              </ul>
+            </div>
           </aside>
         </>
-      ) : (
-        <Loader />
       )}
     </main>
   );
