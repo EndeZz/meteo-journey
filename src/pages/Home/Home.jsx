@@ -22,7 +22,6 @@ import './Home.scss';
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState('');
-  const [filter, setFilter] = useState(null);
   const weatherCities = useSelector(weatherCitiesSelector);
   const loading = useSelector(weatherLoadingSelector);
   const cities = useSelector(citySuggestionsSelector);
@@ -79,7 +78,7 @@ const Home = () => {
         </div>
 
         {favoriteValues && favoriteValues.length > 0 ? (
-          <Card favorites={filter || weatherCities} />
+          <Card favorites={weatherCities} />
         ) : (
           <div className="home__info">
             <Icon

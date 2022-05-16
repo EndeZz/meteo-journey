@@ -8,6 +8,7 @@ import firebase from './config/firebaseConfig';
 import { isLoaded, ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import { createFirestoreInstance } from 'redux-firestore';
 import Loader from './components/Loader';
+import { authSelector } from './redux/auth/authSelectors';
 
 const rrfProps = {
   firebase,
@@ -20,7 +21,7 @@ const rrfProps = {
 };
 
 const AuthIsLoaded = ({ children }) => {
-  const auth = useSelector((state) => state.firebase.auth);
+  const auth = useSelector(authSelector);
 
   return !isLoaded(auth) ? <Loader /> : children;
 };

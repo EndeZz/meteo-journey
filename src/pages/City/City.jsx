@@ -24,6 +24,7 @@ import { authUidSelector } from '../../redux/auth/authSelectors';
 import { addToCities } from '../../redux/city/actions';
 import { citiesValuesSelectors, cityAlreadyExistsSelectors } from '../../redux/city/citySelectors';
 import { Link } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
 
 const City = () => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -43,7 +44,6 @@ const City = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const randomCitiesValues = citiesValues && getRandomCities(citiesValues);
-
 
   useTitle(`MeteoJourney: Погода в городе`);
   useFirestoreConnect(() => [
@@ -126,7 +126,8 @@ const City = () => {
                     className="btn city__favorite"
                     onClick={handleFavorite}
                     disabled={!authUid}
-                    title={isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'}>
+                    data-tip
+                    data-for="favorite-hints">
                     <Icon
                       name={isFavorite ? 'favorite' : 'unfavorite'}
                       width={24}
@@ -134,6 +135,9 @@ const City = () => {
                       aria-hidden={true}
                     />
                   </Button>
+                  <ReactTooltip id="favorite-hints" effect="solid">
+                    {isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'}
+                  </ReactTooltip>
                 </li>
               </ul>
 

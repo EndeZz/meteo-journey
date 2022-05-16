@@ -3,6 +3,7 @@ import Button from '../../../components/Button';
 import Icon from '../../../components/Icon';
 import Input from '../../../components/Input';
 import useToggle from '../../../hooks/useToggle';
+import ReactTooltip from 'react-tooltip';
 
 function Login({ formValues, formErrors, handleChange, handleSubmit, authUserErrors }) {
   const [isPasswordVisible, togglePasswordVisible] = useToggle(true);
@@ -40,7 +41,8 @@ function Login({ formValues, formErrors, handleChange, handleSubmit, authUserErr
           <span
             className="btn auth__label_password-mode"
             onClick={togglePasswordVisible}
-            title={isPasswordVisible ? 'Показать пароль' : 'Скрыть пароль'}>
+            data-tip
+            data-for="password-hints">
             <Icon
               name={isPasswordVisible ? 'eye-not-visible-icon' : 'eye-visible-icon'}
               width={24}
@@ -48,6 +50,9 @@ function Login({ formValues, formErrors, handleChange, handleSubmit, authUserErr
               aria-hidden={true}
             />
           </span>
+          <ReactTooltip id="password-hints" effect="solid">
+            {isPasswordVisible ? 'Показать пароль' : 'Скрыть пароль'}
+          </ReactTooltip>
         </label>
         {formErrors.password && (
           <span className="auth__caption auth__caption_error">{formErrors.password}</span>

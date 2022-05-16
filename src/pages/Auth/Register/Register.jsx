@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 import Button from '../../../components/Button';
 import Icon from '../../../components/Icon';
 import Input from '../../../components/Input';
@@ -42,7 +43,8 @@ function Register({ formValues, formErrors, handleChange, handleSubmit, authUser
           <span
             className="btn auth__label_password-mode"
             onClick={togglePasswordVisible}
-            title={isPasswordVisible ? 'Показать пароль' : 'Скрыть пароль'}>
+            data-tip
+            data-for="password-hints">
             <Icon
               name={isPasswordVisible ? 'eye-not-visible-icon' : 'eye-visible-icon'}
               width={24}
@@ -50,6 +52,9 @@ function Register({ formValues, formErrors, handleChange, handleSubmit, authUser
               aria-hidden={true}
             />
           </span>
+          <ReactTooltip id="password-hints" effect="solid">
+            {isPasswordVisible ? 'Показать пароль' : 'Скрыть пароль'}
+          </ReactTooltip>
         </label>
         {formErrors.password && (
           <span className="auth__caption auth__caption_error">{formErrors.password}</span>
@@ -68,13 +73,17 @@ function Register({ formValues, formErrors, handleChange, handleSubmit, authUser
           <span
             className="btn auth__label_password-mode"
             onClick={toggleConfirmPasswordVisible}
-            title={isConfirmPasswordVisible ? 'Показать пароль' : 'Скрыть пароль'}>
+            data-tip
+            data-for="confirm-password-hints">
             <Icon
               name={isConfirmPasswordVisible ? 'eye-not-visible-icon' : 'eye-visible-icon'}
               width={24}
               height={24}
               aria-hidden={true}
             />
+            <ReactTooltip id="confirm-password-hints" effect="solid">
+              {isPasswordVisible ? 'Показать пароль' : 'Скрыть пароль'}
+            </ReactTooltip>
           </span>
         </label>
         {formErrors.confirmPassword && (
