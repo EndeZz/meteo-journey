@@ -113,6 +113,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 20px;
 
     &-text {
       @include font_config(normal, 400, 8rem, 4.2rem);
@@ -137,7 +138,8 @@
     display: flex;
     gap: 20px;
     text-align: center;
-    box-shadow: 0 3px 10px $color-grey-200;
+    // box-shadow: 0 3px 15px $color-grey-200;
+    background-color: $color-grey-100;
     border-radius: 15px;
 
     &-item {
@@ -165,7 +167,6 @@
 
     &_list {
       width: 100%;
-      gap: 6px;
       flex-direction: column;
       display: flex;
       overflow: hidden;
@@ -174,11 +175,12 @@
     &_item {
       background-color: $color-light;
       border-radius: 15px;
-      padding: 10px 19px;
+      padding: 5px 19px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
+      margin: 8px;
 
       &_active {
         box-shadow: 0 3px 10px $color-grey-200;
