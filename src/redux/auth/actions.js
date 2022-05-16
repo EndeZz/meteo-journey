@@ -56,21 +56,7 @@ export const signIn = (credentials) => {
         dispatch(logInUser());
       })
       .catch((error) => {
-        switch (error.code) {
-          case 'auth/user-not-found':
-            dispatch(signUpUserError('Пользователь не найден'));
-            break;
-          case 'auth/invalid-email':
-            dispatch(signUpUserError('Адрес электронной почты некорректен'));
-            break;
-
-          case 'auth/operation-not-allowed':
-            dispatch(signUpUserError('Ошибка при авторизации'));
-            break;
-          default:
-            dispatch(logInUserError(error.message));
-            break;
-        }
+        dispatch(logInUserError('Неправильное имя пользователя или пароль'));
       });
   };
 };
@@ -100,23 +86,7 @@ export const signUp = (credentials) => {
         dispatch(signUpUser());
       })
       .catch((error) => {
-        switch (error.code) {
-          case 'auth/email-already-in-use':
-            dispatch(signUpUserError('Адрес электронной почты уже используется'));
-            break;
-          case 'auth/invalid-email':
-            dispatch(signUpUserError('Адрес электронной почты некорректен'));
-            break;
-          case 'auth/operation-not-allowed':
-            dispatch(signUpUserError('Ошибка при регистрации'));
-            break;
-          case 'auth/weak-password':
-            dispatch(signUpUserError('Пароль недостаточно надежен'));
-            break;
-          default:
-            dispatch(dispatch(signUpUserError(error.message)));
-            break;
-        }
+        dispatch(signUpUserError('Неправильное имя пользователя или пароль'));
       });
   };
 };

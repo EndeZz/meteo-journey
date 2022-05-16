@@ -19,6 +19,8 @@ export const getFullTime = (dayNum) => {
   return `${hourValue}:${minuteValue}`;
 };
 
-export const getRandomCityElements = (arrayValues) => {
-  return [...new Set(arrayValues.sort(() => Math.random() - 0.5))].slice(0, 8);
+export const getRandomCities = (arrayValues) => {
+  const uniqValues = [...new Set(arrayValues.map((city) => city.name))];
+  const randomValues = uniqValues.sort(() => Math.random() - 0.5).slice(0, 8);
+  return randomValues;
 };

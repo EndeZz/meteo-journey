@@ -9,7 +9,7 @@ import { changeDay, fetchWeatherMore } from '../../redux/weather/actions.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToFavorites, removeFromFavorites } from '../../redux/favorite/actions';
 import Loader from '../../components/Loader';
-import { getFullDate, getFullTime, getRandomCityElements, getWeekDay } from '../../utils/helpers';
+import { getFullDate, getFullTime, getRandomCities, getWeekDay } from '../../utils/helpers';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { favoriteSelectors, favoriteValuesSelector } from '../../redux/favorite/favoriteSelectors';
 import {
@@ -29,6 +29,7 @@ const City = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isToday, setIsToday] = useState(false);
   const [selected, setSelected] = useState(0);
+  const [randomCities, setRandomCities] = useState([]);
   const name = useCityNameParam();
   const weatherData = useSelector(weatherDataSelector);
   const weatherDays = useSelector(weatherDaysSelector);
@@ -41,7 +42,8 @@ const City = () => {
   const authUid = useSelector(authUidSelector);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const randomCity = citiesValues && getRandomCityElements(citiesValues);
+  const randomCitiesValues = citiesValues && getRandomCities(citiesValues);
+
 
   useTitle(`MeteoJourney: Погода в городе`);
   useFirestoreConnect(() => [
@@ -65,7 +67,13 @@ const City = () => {
     } else {
       setIsFavorite(false);
     }
-  }, [favoriteValues]);
+  }, [name, favoriteValues]);
+
+  // Сохранение рекомендаций в неизменном виде
+  // Todo: исправить на более элегантный вариант
+  useEffect(() => {
+    setRandomCities(randomCitiesValues);
+  }, [citiesValues]);
 
   const goBack = useCallback(
     (e) => {
@@ -88,7 +96,7 @@ const City = () => {
     setIsFavorite((prev) => !prev);
   }, [dispatch, currentFavoriteValues]);
 
-  // Отобразить конкретный день
+  // Отобразить конкретный день недели
   const handleChangeDays = useCallback(
     (day) => {
       setSelected(day);
@@ -174,14 +182,15 @@ const City = () => {
               <section className="city__section">
                 <p className="city__caption">Рекомендации</p>
                 <div className="city__group-down">
-                  {randomCity.map((item) => (
-                    <Link
-                      to={`/city/${item.name}`}
-                      className="btn btn_outline city__link"
-                      key={createId()}>
-                      {item.name}
-                    </Link>
-                  ))}
+                  {randomCities &&
+                    randomCities.map((item) => (
+                      <Link
+                        to={`/city/${item}`}
+                        className="btn btn_outline city__link"
+                        key={createId()}>
+                        {item}
+                      </Link>
+                    ))}
                 </div>
               </section>
             )}

@@ -15,7 +15,7 @@ function Login({ formValues, formErrors, handleChange, handleSubmit, authUserErr
           <Input
             type="email"
             name="email"
-            className={`input ${formErrors.email ? 'input_error' : ''}`}
+            className="input"
             value={formValues.email}
             placeholder="Введите почту"
             onChange={handleChange}
@@ -30,7 +30,7 @@ function Login({ formValues, formErrors, handleChange, handleSubmit, authUserErr
           <Input
             type={isPasswordVisible ? 'password' : 'text'}
             name="password"
-            className={`input ${formErrors.password ? 'input_error' : ''}`}
+            className="input"
             value={formValues.password}
             placeholder="Введите пароль"
             onChange={handleChange}
