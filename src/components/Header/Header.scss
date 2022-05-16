@@ -53,3 +53,12 @@
     justify-content: flex-end;
   }
 }
+
+@media only screen and (max-width: 512px) {
+  .header {
+    &__logo-pic {
+      width: 160px;
+      height: max-content;
+    }
+  }
+}

@@ -28,7 +28,7 @@ const CardItem = ({ item }) => {
   }, [dispatch, currentFavoriteValues]);
 
   return (
-    <article className="card-item__item">
+    <article className="card-item">
       <Button className="btn card-item__favorite" onClick={handleFavorite}>
         <Icon
           name={!!item.name ? 'favorite' : 'unfavorite'}
