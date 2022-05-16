@@ -159,6 +159,7 @@
   &__sidebar {
     max-width: 561px;
     width: 100%;
+    max-height: 767px;
     overflow: hidden;
     grid-row-start: 1;
     grid-row-end: 3;
@@ -173,7 +174,7 @@
     }
 
     &_wrapper {
-      height: 90%;
+      height: 92%;
       overflow-y: auto;
     }
 
@@ -293,6 +294,7 @@
 
     &__sidebar {
       max-width: 100%;
+      max-height: 580px;
       grid-row: 2;
       grid-column: 1;
     }
