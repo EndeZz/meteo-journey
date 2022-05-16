@@ -1,2 +1,52 @@
 @import '../../styles/mixins.scss';
 @import '../../styles/variables.scss';
+
+
+.suggestions {
+  &__list {
+    width: inherit;
+    max-height: 180px;
+    position: absolute;
+    overflow: auto;
+    z-index: 1;
+    border-radius: 25px;
+    box-shadow: 0 3px 10px $color-grey-200;
+  }
+
+  &__item {
+    color: $color-light;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    background: $color-light;
+
+    &:hover {
+      background: $color-grey-100;
+    }
+
+    &:active {
+      background: $color-grey-200;
+    }
+  }
+
+  &__link {
+    text-decoration: none;
+    padding: 10px 12px;
+    display: inline-block;
+    width: 100%;
+  }
+
+  &__notice {
+    padding: 10px 12px;
+    display: inline-block;
+    color: $color-grey-300;
+  }
+
+  &__current {
+    color: $color-primary;
+  }
+
+  &__remainder {
+    color: $color-grey-300;
+  }
+}

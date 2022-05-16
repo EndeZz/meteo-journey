@@ -24,9 +24,6 @@ function Login({ formValues, formErrors, handleChange, handleSubmit, authUserErr
             required
           />
         </label>
-        {formErrors.email && (
-          <span className="auth__caption auth__caption_error">{formErrors.email}</span>
-        )}
         <label className="auth__label">
           <Input
             type={isPasswordVisible ? 'password' : 'text'}
@@ -54,12 +51,13 @@ function Login({ formValues, formErrors, handleChange, handleSubmit, authUserErr
             {isPasswordVisible ? 'Показать пароль' : 'Скрыть пароль'}
           </ReactTooltip>
         </label>
-        {formErrors.password && (
+
+        {formErrors.password ? (
           <span className="auth__caption auth__caption_error">{formErrors.password}</span>
-        )}
-        {authUserErrors && (
+        ) : authUserErrors ? (
           <span className="auth__caption auth__caption_error">{authUserErrors}</span>
-        )}
+        ) : null}
+
         <Button className="btn btn_primary auth__btn" type="submit">
           Войти
         </Button>

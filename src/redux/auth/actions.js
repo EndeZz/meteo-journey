@@ -56,7 +56,7 @@ export const signIn = (credentials) => {
         dispatch(logInUser());
       })
       .catch((error) => {
-        dispatch(logInUserError('Неправильное имя пользователя или пароль'));
+        dispatch(logInUserError('Неправильный почтовый адрес или пароль'));
       });
   };
 };
@@ -86,7 +86,7 @@ export const signUp = (credentials) => {
         dispatch(signUpUser());
       })
       .catch((error) => {
-        dispatch(signUpUserError('Неправильное имя пользователя или пароль'));
+        dispatch(signUpUserError('Неправильный почтовый адрес или пароль'));
       });
   };
 };

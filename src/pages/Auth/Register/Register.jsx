@@ -18,7 +18,7 @@ function Register({ formValues, formErrors, handleChange, handleSubmit, authUser
           <Input
             type="email"
             name="email"
-            className={`input ${formErrors.email || authUserErrors ? 'input_error' : ''}`}
+            className="input"
             value={formValues.email}
             placeholder="Введите почту"
             onChange={handleChange}
@@ -26,14 +26,11 @@ function Register({ formValues, formErrors, handleChange, handleSubmit, authUser
             required
           />
         </label>
-        {formErrors.email && (
-          <span className="auth__caption auth__caption_error">{formErrors.email}</span>
-        )}
         <label className="auth__label">
           <Input
             type={isPasswordVisible ? 'password' : 'text'}
             name="password"
-            className={`input ${formErrors.password ? 'input_error' : ''}`}
+            className="input"
             value={formValues.password}
             placeholder="Введите пароль"
             onChange={handleChange}
@@ -56,14 +53,11 @@ function Register({ formValues, formErrors, handleChange, handleSubmit, authUser
             {isPasswordVisible ? 'Показать пароль' : 'Скрыть пароль'}
           </ReactTooltip>
         </label>
-        {formErrors.password && (
-          <span className="auth__caption auth__caption_error">{formErrors.password}</span>
-        )}
         <label className="auth__label">
           <Input
             type={isConfirmPasswordVisible ? 'password' : 'text'}
             name="confirmPassword"
-            className={`input ${formErrors.confirmPassword ? 'input_error' : ''}`}
+            className="input"
             value={formValues.confirmPassword}
             placeholder="Повторите пароль"
             onChange={handleChange}
@@ -86,12 +80,13 @@ function Register({ formValues, formErrors, handleChange, handleSubmit, authUser
             </ReactTooltip>
           </span>
         </label>
-        {formErrors.confirmPassword && (
+        {formErrors.password ? (
+          <span className="auth__caption auth__caption_error">{formErrors.password}</span>
+        ) : formErrors.confirmPassword ? (
           <span className="auth__caption auth__caption_error">{formErrors.confirmPassword}</span>
-        )}
-        {authUserErrors && (
+        ) : authUserErrors ? (
           <span className="auth__caption auth__caption_error">{authUserErrors}</span>
-        )}
+        ) : null}
         <Button className="btn btn_primary auth__btn" type="submit">
           Создать аккаунт
         </Button>

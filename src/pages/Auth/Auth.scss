@@ -16,7 +16,8 @@
     margin: 0 auto;
     height: max-content;
     padding: 30px;
-    width: 412px;
+    max-width: 412px;
+    width: 100%;
   }
 
   &__content {
@@ -78,5 +79,13 @@
     display: flex;
     justify-content: center;
     width: 100%;
+  }
+}
+
+@media only screen and (max-width: 512px) {
+  .auth {
+    &__section {
+      width: calc(100% - 5rem);
+    }
   }
 }

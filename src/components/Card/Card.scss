@@ -5,6 +5,27 @@
   display: grid;
   grid-column-gap: 3rem;
   grid-row-gap: 3rem;
-  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  grid-template-columns: repeat(4, minmax(210px, 1fr));
   margin-top: 94px;
+}
+
+@media only screen and (max-width: 1200px) {
+}
+
+@media only screen and (max-width: 988px) {
+  .cards {
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+}
+
+@media only screen and (max-width: 512px) {
+  .cards {
+    grid-template-columns: repeat(1, minmax(220px, 1fr));
+  }
 }

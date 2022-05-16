@@ -7,7 +7,8 @@
 
   &__wrapper {
     position: relative;
-    width: 562px;
+    max-width: 562px;
+    width: 100%;
     margin: 0 auto;
   }
 
@@ -41,54 +42,30 @@
       text-align: center;
     }
   }
+}
 
-  &__suggestions {
-    &_list {
-      width: inherit;
-      max-height: 180px;
-      position: absolute;
-      overflow: auto;
-      z-index: 1;
-      border-radius: 25px;
-      box-shadow: 0 3px 10px $color-grey-200;
-    }
+@media only screen and (max-width: 1200px) {
+}
 
-    &_item {
-      color: $color-light;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-
-      background: $color-light;
-
-      &:hover {
-        background: $color-grey-100;
+@media only screen and (max-width: 988px) {
+  .home {
+    &__info {
+      &-arrow {
+        left: 80px;
+        top: -15px;
       }
 
-      &:active {
-        background: $color-grey-200;
+      &-text {
+        @include font_config(normal, 500, 2.4rem, 2.8rem);
+
+        text-align: center;
       }
-    }
-
-    &_link {
-      text-decoration: none;
-      padding: 10px 12px;
-      display: inline-block;
-      width: 100%;
-    }
-
-    &_notice {
-      padding: 10px 12px;
-      display: inline-block;
-      color: $color-grey-300;
-    }
-
-    &_current {
-      color: $color-primary;
-    }
-
-    &_remainder {
-      color: $color-grey-300;
     }
   }
+}
+
+@media only screen and (max-width: 768px) {
+}
+
+@media only screen and (max-width: 512px) {
 }

@@ -111,94 +111,92 @@ const City = () => {
     <main className="city container">
       {JSON.stringify(weatherData) !== '{}' && JSON.stringify(currentDay) !== '{}' && (
         <>
-          <div className="city__container">
-            <section className="city__section">
-              <ul className="city__list">
-                <li className="city__item">
-                  <Button className="btn city__back-link" onClick={goBack}>
-                    <Icon name="arrow-left-circle" width={24} height={24} aria-hidden={true} />
+          <section className="city__section city__section_primary">
+            <ul className="city__list">
+              <li className="city__item">
+                <Button className="btn city__back-link" onClick={goBack}>
+                  <Icon name="arrow-left-circle" width={24} height={24} aria-hidden={true} />
 
-                    <p className="city__back-link_caption">Назад</p>
-                  </Button>
+                  <p className="city__back-link_caption">Назад</p>
+                </Button>
+              </li>
+              <li className="city__item">
+                <Button
+                  className="btn city__favorite"
+                  onClick={handleFavorite}
+                  disabled={!authUid}
+                  data-tip
+                  data-for="favorite-hints">
+                  <Icon
+                    name={isFavorite ? 'favorite' : 'unfavorite'}
+                    width={24}
+                    height={24}
+                    aria-hidden={true}
+                  />
+                </Button>
+                <ReactTooltip id="favorite-hints" effect="solid">
+                  {isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'}
+                </ReactTooltip>
+              </li>
+            </ul>
+
+            <div className="city__content">
+              <h2 className="city__title">{name}</h2>
+              <div className="city__date">
+                <p>
+                  {getFullDate(currentDay.dt)}, {getWeekDay(currentDay.dt)}
+                </p>
+                <p>{currentDay.temp.day ? 'Погода днем' : 'Сейчас'}</p>
+              </div>
+
+              <div className="city__degree">
+                <img
+                  src={getWeatherIcon(currentDay.weather[0].main)}
+                  alt="Weather icon"
+                  className="city_day-icon"
+                />
+                <p className="city__degree-text">
+                  {Math.round(currentDay.temp.day ?? currentDay.temp)}&#176;C
+                </p>
+              </div>
+              <p className="city__desc">{currentDay.weather[0].description}</p>
+              <ul className="city__annotation">
+                <li className="city__annotation-item">
+                  <Icon name="pressure" width={24} height={24} aria-hidden={true} />
+                  <p className="city__caption">Давление</p>
+                  <p className="city__caption_value">
+                    {Math.round(currentDay.pressure / 1.33322)} мм рт. ст.
+                  </p>
                 </li>
-                <li className="city__item">
-                  <Button
-                    className="btn city__favorite"
-                    onClick={handleFavorite}
-                    disabled={!authUid}
-                    data-tip
-                    data-for="favorite-hints">
-                    <Icon
-                      name={isFavorite ? 'favorite' : 'unfavorite'}
-                      width={24}
-                      height={24}
-                      aria-hidden={true}
-                    />
-                  </Button>
-                  <ReactTooltip id="favorite-hints" effect="solid">
-                    {isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'}
-                  </ReactTooltip>
+                <li className="city__annotation-item">
+                  <Icon name="rainy" width={24} height={24} aria-hidden={true} />
+                  <p className="city__caption">Влажность</p>
+                  <p className="city__caption_value">{currentDay.humidity}%</p>
+                </li>
+                <li className="city__annotation-item">
+                  <Icon name="wind" width={24} height={24} aria-hidden={true} />
+                  <p className="city__caption">Ветер</p>
+                  <p className="city__caption_value">{currentDay.wind_speed} мм/с</p>
                 </li>
               </ul>
-
-              <div className="city__content">
-                <h2 className="city__title">{name}</h2>
-                <div className="city__date">
-                  <p>
-                    {getFullDate(currentDay.dt)}, {getWeekDay(currentDay.dt)}
-                  </p>
-                  <p>{currentDay.temp.day ? 'Погода днем' : 'Сейчас'}</p>
-                </div>
-
-                <div className="city__degree">
-                  <img
-                    src={getWeatherIcon(currentDay.weather[0].main)}
-                    alt="Weather icon"
-                    className="city_day-icon"
-                  />
-                  <p className="city__degree-text">
-                    {Math.round(currentDay.temp.day ?? currentDay.temp)}&#176;C
-                  </p>
-                </div>
-                <p className="city__desc">{currentDay.weather[0].description}</p>
-                <ul className="city__annotation">
-                  <li className="city__annotation-item">
-                    <Icon name="pressure" width={24} height={24} aria-hidden={true} />
-                    <p className="city__caption">Давление</p>
-                    <p className="city__caption_value">
-                      {Math.round(currentDay.pressure / 1.33322)} мм рт. ст.
-                    </p>
-                  </li>
-                  <li className="city__annotation-item">
-                    <Icon name="rainy" width={24} height={24} aria-hidden={true} />
-                    <p className="city__caption">Влажность</p>
-                    <p className="city__caption_value">{currentDay.humidity}%</p>
-                  </li>
-                  <li className="city__annotation-item">
-                    <Icon name="wind" width={24} height={24} aria-hidden={true} />
-                    <p className="city__caption">Ветер</p>
-                    <p className="city__caption_value">{currentDay.wind_speed} мм/с</p>
-                  </li>
-                </ul>
+            </div>
+          </section>
+          {citiesValues && citiesValues.length > 0 && (
+            <section className="city__section city__section_secondary">
+              <p className="city__caption">Рекомендации</p>
+              <div className="city__group-down">
+                {randomCities &&
+                  randomCities.map((item) => (
+                    <Link
+                      to={`/city/${item}`}
+                      className="btn btn_outline city__link"
+                      key={createId()}>
+                      {item}
+                    </Link>
+                  ))}
               </div>
             </section>
-            {citiesValues && citiesValues.length > 0 && (
-              <section className="city__section">
-                <p className="city__caption">Рекомендации</p>
-                <div className="city__group-down">
-                  {randomCities &&
-                    randomCities.map((item) => (
-                      <Link
-                        to={`/city/${item}`}
-                        className="btn btn_outline city__link"
-                        key={createId()}>
-                        {item}
-                      </Link>
-                    ))}
-                </div>
-              </section>
-            )}
-          </div>
+          )}
 
           <aside className="city__sidebar">
             <div className="city__sidebar_caption">

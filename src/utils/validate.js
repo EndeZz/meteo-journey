@@ -6,11 +6,11 @@ export const validate = (values) => {
   if (!regexEmail.test(String(values.email).toLowerCase())) {
     errors.email = 'Некорректная почта';
   }
-  if (values.password.length <= 3) {
-    errors.password = 'Пароль должен быть от 3 символов';
+  if (values.password.length <= 6) {
+    errors.password = 'Пароль должен быть от 6 символов';
   }
   if (values.confirmPassword !== values.password) {
-    errors.confirmPassword = 'пароли не совпадают';
+    errors.confirmPassword = 'Пароли не совпадают';
   }
   return errors;
 };
