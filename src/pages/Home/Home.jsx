@@ -34,7 +34,7 @@ const Home = () => {
     {
       collection: 'favorites',
       where: ['authorId', '==', authUid ?? ''],
-      orderBy: ['date', 'asc'],
+      orderBy: ['date', 'desc'],
     },
   ]);
 
