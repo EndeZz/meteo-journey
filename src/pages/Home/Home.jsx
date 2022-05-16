@@ -39,9 +39,9 @@ const Home = () => {
   ]);
 
   // Через каждый промежуток времени обновлять данные о погоде
-  // useInterval(() => {
-  //   dispatch(fetchWeather(favoriteValues));
-  // }, 1000 * 10);
+  useInterval(() => {
+    dispatch(fetchWeather(favoriteValues));
+  }, 1000 * 15);
 
   // Получение "избранных" городов из firebase
   useEffect(() => {

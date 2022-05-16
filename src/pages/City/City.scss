@@ -7,7 +7,6 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 54px;
   margin-top: 54px;
-  // flex-wrap: wrap;
 
   &__section,
   &__sidebar {
@@ -145,7 +144,6 @@
   &__annotation {
     display: flex;
     text-align: center;
-    // box-shadow: 0 3px 15px $color-grey-200;
     background-color: $color-grey-100;
     border-radius: 15px;
     justify-content: space-between;
