@@ -44,7 +44,7 @@
   }
 }
 
-@media only screen and (max-width: 512px) {
+@media only screen and (max-width: $media-sm) {
   .input {
     width: 100%;
   }

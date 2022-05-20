@@ -116,7 +116,7 @@
   }
 }
 
-@media only screen and (max-width: 988px) {
+@media only screen and (max-width: $media-lg) {
   .card-item {
     &__pic {
       position: absolute;
@@ -131,7 +131,7 @@
   }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: $media-md) {
   .card-item {
     &__pic {
       position: absolute;

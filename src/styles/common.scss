@@ -81,13 +81,13 @@ input {
   clip: rect(0 0 0 0);
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: $media-xl) {
   .container {
     width: calc(100% - 5rem);
   }
 }
 
-@media only screen and (max-width: 988px) {
+@media only screen and (max-width: $media-lg) {
   html {
     font-size: 7px;
   }

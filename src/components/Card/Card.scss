@@ -10,19 +10,19 @@
   margin-bottom: 24px;
 }
 
-@media only screen and (max-width: 988px) {
+@media only screen and (max-width: $media-lg) {
   .cards {
     grid-template-columns: repeat(3, minmax(220px, 1fr));
   }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: $media-md) {
   .cards {
     grid-template-columns: repeat(2, minmax(220px, 1fr));
   }
 }
 
-@media only screen and (max-width: 512px) {
+@media only screen and (max-width: $media-sm) {
   .cards {
     grid-template-columns: repeat(1, minmax(220px, 1fr));
   }
