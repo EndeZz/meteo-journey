@@ -8,38 +8,16 @@ import LogoImg from '../../../public/logo.png';
 import { signOut } from '../../redux/auth/actions';
 import { authSelector } from '../../redux/auth/authSelectors';
 import './Header.scss';
+import { useOutside } from '../../hooks/useOutside';
 
 function Header() {
   const auth = useSelector(authSelector);
-  const [isVisibleDropDown, setIsVisibleDropDown] = useState(false);
-  const refToggleDropDown = useRef(null);
   const dispatch = useDispatch();
+  const { ref, isShow, setIsShow } = useOutside(false)
 
   const handleSignOut = useCallback(() => {
     dispatch(signOut());
   }, [dispatch]);
-
-  useEffect(() => {
-    const listener = (event) => {
-      if (refToggleDropDown.current) {
-        if (!refToggleDropDown.current.contains(event.target)) {
-          setIsVisibleDropDown(false);
-        }
-      }
-      return;
-    };
-
-    document.addEventListener('mousedown', listener);
-    document.addEventListener('touchstart', listener);
-    return () => {
-      document.removeEventListener('mousedown', listener);
-      document.removeEventListener('touchstart', listener);
-    };
-  }, []);
-
-  const handleToggleDropDown = () => {
-    setIsVisibleDropDown((prev) => !prev);
-  };
 
   return (
     <header className="header">
@@ -49,13 +27,13 @@ function Header() {
           <img className="header__logo-pic" src={LogoImg} alt="Логотип" />
         </Link>
 
-        <div className="header__btn-group" ref={refToggleDropDown}>
+        <div className="header__btn-group" ref={ref}>
           {auth.uid ? (
             <>
               <div>
                 <Button
-                  className={`btn header__user ${isVisibleDropDown ? 'header__user_active' : ''}`}
-                  onClick={handleToggleDropDown}>
+                  className={`btn header__user ${isShow ? 'header__user_active' : ''}`}
+                  onClick={setIsShow}>
                   <Icon
                     className="header__user_pic"
                     name="user"
@@ -64,7 +42,7 @@ function Header() {
                     aria-hidden={true}
                   />
                 </Button>
-                {isVisibleDropDown && (
+                {isShow && (
                   <Dropdown handleSignOut={handleSignOut} userEmail={auth.email} />
                 )}
               </div>

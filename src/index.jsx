@@ -34,7 +34,7 @@ ReactDOM.render(
           <App />
         </AuthIsLoaded>
       </BrowserRouter>
-    </Provider>{' '}
+    </Provider>
   </ReactReduxFirebaseProvider>,
   document.getElementById('root')
 );
