@@ -27,14 +27,14 @@ const AuthIsLoaded = ({ children }) => {
 };
 
 ReactDOM.render(
-  <ReactReduxFirebaseProvider {...rrfProps}>
-    <Provider store={store}>
+  <Provider store={store}>
+    <ReactReduxFirebaseProvider {...rrfProps}>
       <BrowserRouter>
         <AuthIsLoaded>
           <App />
         </AuthIsLoaded>
       </BrowserRouter>
-    </Provider>
-  </ReactReduxFirebaseProvider>,
+    </ReactReduxFirebaseProvider>
+  </Provider>,
   document.getElementById('root')
 );
