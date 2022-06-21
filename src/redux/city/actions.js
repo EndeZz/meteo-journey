@@ -1,4 +1,3 @@
-import { CITY_API } from '../../constants/api';
 import { fetchApi } from '../../utils/fetchApi';
 import { CITY_FAILURE, CITY_LOADING, FETCH_CITY, SET_CITY } from './types';
 
@@ -54,7 +53,7 @@ export const fetchCity = (searchValue) => {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization: 'Token ' + CITY_API.KEY,
+      Authorization: 'Token ' + process.env.CITY_API_KEY,
     },
     body: JSON.stringify({
       query: searchValue,
@@ -76,7 +75,7 @@ export const fetchCity = (searchValue) => {
     dispatch(setLoading(true));
     dispatch(setError(null));
     try {
-      const cityRes = await fetchApi(CITY_API.URL, options);
+      const cityRes = await fetchApi( process.env.CITY_API_URL, options);
       dispatch(getCity(cityRes));
       dispatch(setLoading(false));
     } catch (error) {

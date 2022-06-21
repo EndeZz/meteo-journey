@@ -1,4 +1,3 @@
-import { WEATHER_API } from '../../constants/api';
 import { fetchApi } from '../../utils/fetchApi';
 import {
   CHANGE_DAY,
@@ -50,7 +49,7 @@ export const fetchWeather = (cities) => {
     dispatch(setError(null));
     try {
       const requests = cities.map(async (city) => {
-        const weatherUrl = `${WEATHER_API.URL}/weather?q=${city.name}&lang=ru&units=metric&appid=${WEATHER_API.KEY}`;
+        const weatherUrl = `${process.env.WEATHER_API_URL}/weather?q=${city.name}&lang=ru&units=metric&appid=${process.env.WEATHER_API_KEY}`;
         const weatherRes = await fetchApi(weatherUrl);
         return weatherRes;
       });
@@ -71,9 +70,9 @@ export const fetchWeatherMore = (city) => {
     dispatch(setLoading(true));
     dispatch(setError(null));
     try {
-      const weatherUrl = `${WEATHER_API.URL}/weather?q=${city}&lang=ru&units=metric&appid=${WEATHER_API.KEY}`;
+      const weatherUrl = `${process.env.WEATHER_API_URL}/weather?q=${city}&lang=ru&units=metric&appid=${process.env.WEATHER_API_KEY}`;
       const weatherRes = await fetchApi(weatherUrl);
-      const forecastUrl = `${WEATHER_API.URL}/onecall?lat=${weatherRes.coord.lat}&lon=${weatherRes.coord.lon}&exclude=alerts,minutely&lang=ru&units=metric&appid=${WEATHER_API.KEY}`;
+      const forecastUrl = `${process.env.WEATHER_API_URL}/onecall?lat=${weatherRes.coord.lat}&lon=${weatherRes.coord.lon}&exclude=alerts,minutely&lang=ru&units=metric&appid=${process.env.WEATHER_API_KEY}`;
       const forecastRes = await fetchApi(forecastUrl);
       dispatch(getWeatherMore(forecastRes));
       dispatch(changeDay(0));

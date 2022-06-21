@@ -1,4 +1,5 @@
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -18,16 +19,17 @@ module.exports = (env, options) => {
       compress: true,
       port: 8080,
       historyApiFallback: true,
-      static: __dirname + "/src/",
+      static: __dirname + '/src/',
     },
     context: path.join(__dirname, './src'),
     entry: path.join(__dirname, './src', 'index.jsx'),
     output: {
       path: path.resolve(__dirname, 'dist'),
-      publicPath: '/',   // Раскомментить при запуске проекта в режиме разработки
+      publicPath: '/', // Раскомментить при запуске проекта в режиме разработки
       filename: '[name].[contenthash].js',
     },
     plugins: [
+      new Dotenv(),
       new HtmlWebpackPlugin({
         template: path.join(__dirname, 'src', 'index.html'),
       }),
@@ -75,11 +77,20 @@ module.exports = (env, options) => {
         },
         {
           test: /\.css$/i,
-          use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+          use: [
+            isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+            'css-loader',
+            'postcss-loader',
+          ],
         },
         {
           test: /\.(s[ac]ss)$/i,
-          use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
+          use: [
+            isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+            'css-loader',
+            'postcss-loader',
+            'sass-loader',
+          ],
         },
       ],
     },
