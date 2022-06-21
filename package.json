@@ -4,6 +4,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "webpack serve --mode development",
+    "deploy": "firebase deploy",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix"
   },
